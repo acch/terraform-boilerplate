@@ -1,0 +1,112 @@
+---
+# https://taskfile.dev
+
+version: "3"
+
+vars:
+  DEFAULT_ENV: dev
+  ENV: "{{ .ENV | default .DEFAULT_ENV }}"
+  GIT_TAG:
+    sh: git describe --tags --abbrev=0 || true
+
+tasks:
+  workspace:
+    internal: true
+    cmds:
+      - >-
+        terraform workspace select
+        -or-create=true
+        {{.ENV}}
+    requires:
+      vars: [ENV]
+    status:
+      - terraform workspace show | grep -q '{{.ENV}}'
+
+  fmt:
+    desc: Reformat configuration in standard style
+    cmds:
+      - >-
+        terraform fmt
+        -write=true
+        -recursive
+
+  lint:
+    desc: Check if configuration is formatted
+    cmds:
+      - yamllint .
+      - >-
+        terraform fmt
+        -write=false
+        -recursive
+        -diff
+        -check
+
+  list:
+    desc: List resources in state
+    cmds:
+      - terraform workspace show
+      - terraform state list
+
+  show:
+    desc: Show resource in state
+    cmds:
+      - terraform workspace show
+      - terraform state show {{.CLI_ARGS}}
+
+  init:
+    desc: Prepare working directory
+    cmds:
+      - terraform -version
+      - >-
+        terraform init
+        -upgrade
+        -input=false
+
+  validate:
+    desc: Check whether configuration is valid
+    cmds:
+      - terraform validate
+
+  test:
+    desc: Execute integration tests
+
+  refresh:
+    desc: Update state to match remote systems
+
+  plan:
+    desc: Show required changes
+    cmds:
+      - terraform -version
+      - task: workspace
+      - >-
+        terraform plan
+        -var env={{.ENV}}
+        -out {{.ENV}}.tfplan
+        -input=false
+    requires:
+      vars: [ENV]
+
+  apply:
+    desc: Create or update infrastructure
+    cmds:
+      - terraform -version
+      - task: workspace
+      - >-
+        terraform apply
+        -input=false
+        {{.ENV}}.tfplan
+      - rm -f {{.ENV}}.tfplan
+    requires:
+      vars: [ENV]
+
+  destroy:
+    desc: Destroy previously-created infrastructure
+    cmds:
+      - terraform -version
+      - task: workspace
+      - >-
+        terraform destroy
+        -var env={{.ENV}}
+        -input=false
+    requires:
+      vars: [ENV]

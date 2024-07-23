@@ -1,0 +1,7 @@
+---
+# name of the output file
+filename: foo
+
+# common tags to add to resources
+tags:
+  Namespace: acch

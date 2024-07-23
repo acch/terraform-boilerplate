@@ -1,0 +1,5 @@
+---
+environment: dev
+stage: dev
+dev: true
+prod: false
