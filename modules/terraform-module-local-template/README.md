@@ -8,7 +8,7 @@ Copy it for creating new modules, to ensure consistent structure, naming convent
 Example usage of the module:
 
 ```terraform
-module "template" {
+module "local_template" {
   source = "./modules/terraform-module-local-template"
 
   filename = "foo"

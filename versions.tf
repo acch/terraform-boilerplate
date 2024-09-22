@@ -4,7 +4,7 @@ terraform {
   required_providers {
     /*
     the root module does not require any providers directly.
-    its sole purpose is to reference child modules, which declare their required providers.
+    its sole purpose is to reference child modules, which declare their own required providers.
     terraform will find all providers required by any child modules.
     */
   }
