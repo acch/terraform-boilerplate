@@ -1,8 +1,9 @@
 FROM registry.access.redhat.com/ubi9/ubi:latest
 
 RUN echo -e "\
-  alias ls='ls --color=auto'\n\
-  alias ll='ls -l --color=auto'\n" \
+  alias ls='ls --color=auto'\n \
+  alias ll='ls -l --color=auto'\n \
+  export PS1='\n\[\e[0;1;94m\]\W \[\e[0;1;93m\]@\[\e[0;1;93m\]$(git branch 2>/dev/null | grep '"'"'^*'"'"' | colrm 1 2)\n\[\e[0;32m\]➜ \[\e[0m\]'" \
   >> /root/.bashrc
 
 RUN dnf -y update && \
