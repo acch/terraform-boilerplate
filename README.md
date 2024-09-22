@@ -4,7 +4,7 @@
 [![GitHub Stars](https://img.shields.io/github/stars/acch/terraform-boilerplate.svg?label=github%20%E2%98%85)](https://github.com/acch/terraform-boilerplate/)
 [![License](https://img.shields.io/github/license/acch/terraform-boilerplate.svg)](LICENSE)
 
-[Terraform](https://www.terraform.io/) is an infrastructure as code (IaC) tool.
+[Terraform](https://www.terraform.io/) is an Infrastructure as Code (IaC) tool.
 It uses declarative configuration for managing infrastructure resources with [providers](https://developer.hashicorp.com/terraform/language/providers).
 The configuration files in this repository can act as a template for your own Terraform projects, in order to get you started quickly.
 
@@ -23,15 +23,23 @@ Git will allow you to version and roll-back changes with ease.
 
 Specifically, you'll want to customize the following files:
 
-- Enable Providers (Azure, etc.)
+- Enable Providers (Azure, AWS, Google Cloud):
 
-  - Add Azure subscription name to `Makefile`:
+  - Enable features in `Makefile`:
+
+    ```make
+    ENABLE_AWS		:= FALSE
+    ENABLE_AZURE	:= FALSE
+    ENABLE_GCP		:= FALSE
+    ```
+
+  - Define appropriate variables (subscriptions, etc.) in `Makefile`:
 
     ```make
     AZ_SUBSCRIPTION := my-azure-subscription
     ```
 
-- Optionally, enable Remote State Backend
+- Optionally, enable [Remote State](https://developer.hashicorp.com/terraform/language/state/remote) via HCP Terraform:
 
   - Create [organization](https://app.terraform.io/app/organizations/new) and project in [HCP Terraform](https://app.terraform.io/app)
 
