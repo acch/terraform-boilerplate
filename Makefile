@@ -25,8 +25,19 @@ TERRAFORM-DOCS	:= $(shell command -v terraform-docs 2> /dev/null)
 YAMLLINT        := $(shell command -v yamllint 2> /dev/null)
 .DEFAULT_GOAL		:= help
 
+###
 # Azure
 AZ_SUBSCRIPTION := my-azure-subscription
+
+###
+# AWS
+# https://github.com/acch/terraform-boilerplate/issues/2
+# ...
+
+###
+# Google Cloud
+# https://github.com/acch/terraform-boilerplate/issues/3
+# ...
 
 ###
 # TARGETS
@@ -45,6 +56,14 @@ ifeq (, $(AZ))
 	$(error No az in $(PATH))
 endif
 endif
+
+# AWS
+# https://github.com/acch/terraform-boilerplate/issues/2
+# ...
+
+# Google Cloud
+# https://github.com/acch/terraform-boilerplate/issues/3
+# ...
 
 check-env: check
 # check for necessary environment variables
@@ -70,7 +89,7 @@ login: check ## Log in and set active subscription
 ifeq ($(ENABLE_AZURE),TRUE)
 	@$(AZ) version \
 		--output table
-	
+
 	$(AZ) account clear
 	$(AZ) login \
 		--output none
@@ -79,6 +98,14 @@ ifeq ($(ENABLE_AZURE),TRUE)
 	@$(AZ) account show \
 		--output table
 endif
+
+# AWS
+# https://github.com/acch/terraform-boilerplate/issues/2
+# ...
+
+# Google Cloud
+# https://github.com/acch/terraform-boilerplate/issues/3
+# ...
 
 fmt: check ## Reformat configuration in standard style
 	$(TERRAFORM) fmt \
@@ -144,7 +171,7 @@ ifneq ($(shell terraform workspace show), $(ENV))
 	@echo 'Switching to the [$(ENV)] environment ...';
 	$(TERRAFORM) workspace select -or-create=true $(ENV);
 endif
-	
+
 	$(TERRAFORM) plan \
 		-var "env=$(ENV)" \
 		-out $(ENV).tfplan \
