@@ -9,7 +9,8 @@
         "donjayamanne.githistory",
         "eamodio.gitlens",
         "esbenp.prettier-vscode",
-        "hashicorp.terraform"
+        "hashicorp.terraform",
+        "redhat.vscode-yaml"
       ]
     }
   },
