@@ -9,7 +9,6 @@ RUN echo -e "\
 RUN dnf -y update && \
   dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
   /usr/bin/crb enable && \
-  sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin && \
   dnf config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo && \
   dnf -y install \
     git \
@@ -17,6 +16,7 @@ RUN dnf -y update && \
     yamllint \
     terraform && \
   dnf clean all && \
+  sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin && \
   GOPATH=/usr/local go install github.com/terraform-docs/terraform-docs@v0.17.0 && \
   GOPATH=/usr/local go clean -modcache
 
