@@ -18,6 +18,7 @@ RUN dnf -y update && \
   dnf clean all && \
   sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin && \
   GOPATH=/usr/local go install github.com/terraform-docs/terraform-docs@v0.17.0 && \
+  GOPATH=/usr/local go install github.com/AlexNabokikh/tfsort@latest && \
   GOPATH=/usr/local go clean -modcache
 
 VOLUME ["/src"]

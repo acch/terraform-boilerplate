@@ -22,6 +22,7 @@ ENABLE_GCP		:= FALSE
 AZ							:= $(shell command -v az 2> /dev/null)
 TERRAFORM				:= $(shell command -v terraform 2> /dev/null)
 TERRAFORM-DOCS	:= $(shell command -v terraform-docs 2> /dev/null)
+TFSORT					:= $(shell command -v tfsort 2> /dev/null)
 YAMLLINT        := $(shell command -v yamllint 2> /dev/null)
 .DEFAULT_GOAL		:= help
 
@@ -212,6 +213,14 @@ endif
 		--lockfile=false \
 		--output-file README.md \
 		--recursive
+
+sort: ## Sort variables and outputs
+ifeq (, $(TFSORT))
+	$(error No tfsort in $(PATH))
+endif
+
+	$(TFSORT) outputs.tf
+	$(TFSORT) variables.tf
 
 clean: ## Clean temporary files
 	find "$(CURDIR)" \( -type f -name ".terraform.lock.hcl" -o -type d -name ".terraform" -o -type f -name "*.tfplan" \) -exec rm -rf {} +
