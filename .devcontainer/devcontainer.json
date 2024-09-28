@@ -6,8 +6,6 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "donjayamanne.githistory",
-        "eamodio.gitlens",
         "esbenp.prettier-vscode",
         "hashicorp.terraform",
         "redhat.vscode-yaml"
@@ -16,20 +14,10 @@
   },
 
   "securityOpt": ["label=disable"],
-
-  //"mounts": [
-  //"type=bind,source=${localEnv:HOME}/.ansible/collections/ansible_collections,target=/root/.ansible/collections/ansible_collections,ro=true",
-  //"type=bind,source=${localEnv:HOME}/.ssh,target=/root/.ssh,ro=false"
-  //],
+  "mounts": [],
 
   "workspaceMount": "type=bind,source=${localWorkspaceFolder},target=/src,ro=false",
   "workspaceFolder": "/src",
 
-  "remoteEnv": {
-    //"IBMCLOUD_API_KEY": "${localEnv:IBMCLOUD_API_KEY}",
-    //"IAAS_CLASSIC_USERNAME": "${localEnv:IAAS_CLASSIC_USERNAME}",
-    //"IAAS_CLASSIC_API_KEY": "${localEnv:IAAS_CLASSIC_API_KEY}",
-    //"AWS_ACCESS_KEY_ID": "${localEnv:AWS_ACCESS_KEY_ID}",
-    //"AWS_SECRET_ACCESS_KEY": "${localEnv:AWS_SECRET_ACCESS_KEY}"
-  }
+  "remoteEnv": {}
 }
