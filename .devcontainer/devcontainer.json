@@ -1,4 +1,6 @@
 {
+  "name": "terraform-boilerplate",
+
   "build": {
     "dockerfile": "Dockerfile"
   },
