@@ -19,12 +19,12 @@ ENABLE_GCP		:= FALSE
 ###
 # VARIABLES
 ###
-AZ							:= $(shell command -v az 2> /dev/null)
-TERRAFORM				:= $(shell command -v terraform 2> /dev/null)
+AZ				:= $(shell command -v az 2> /dev/null)
+TERRAFORM		:= $(shell command -v terraform 2> /dev/null)
 TERRAFORM-DOCS	:= $(shell command -v terraform-docs 2> /dev/null)
-TFSORT					:= $(shell command -v tfsort 2> /dev/null)
-YAMLLINT        := $(shell command -v yamllint 2> /dev/null)
-.DEFAULT_GOAL		:= help
+TFSORT			:= $(shell command -v tfsort 2> /dev/null)
+YAMLLINT		:= $(shell command -v yamllint 2> /dev/null)
+.DEFAULT_GOAL	:= help
 
 ###
 # Azure
@@ -43,7 +43,7 @@ AZ_SUBSCRIPTION := my-azure-subscription
 ###
 # TARGETS
 ###
-.PHONY: check check-env help login fmt lint list show init validate test refresh plan apply destroy docs clean
+.PHONY: check check-env help login fmt lint list show init validate test refresh plan apply destroy docs sort clean
 
 check:
 # check for necessary tools
@@ -139,7 +139,7 @@ validate: check ## Check whether configuration is valid
 	$(TERRAFORM) validate
 
 	$(YAMLLINT) config/ \
-	  --strict
+		--strict
 
 test: check ## Execute integration tests
 	@for dir in modules/*/tests ; do \
@@ -201,7 +201,7 @@ endif
 
 	$(TERRAFORM) destroy \
 		-var "env=$(ENV)" \
-	  -input=false
+		-input=false
 
 docs: ## Generate documentation
 ifeq (, $(TERRAFORM-DOCS))
