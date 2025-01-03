@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: "terraform"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    assignees:
+      - acch
+    reviewers:
+      - acch
+    open-pull-requests-limit: 10
