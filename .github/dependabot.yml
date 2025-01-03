@@ -1,13 +1,11 @@
 version: 2
 updates:
-  - package-ecosystem: "terraform"
+  - package-ecosystem: terraform
     directories:
       - "/"
       - "/modules/*/"
     schedule:
-      interval: "daily"
+      interval: daily
     assignees:
-      - acch
-    reviewers:
       - acch
     open-pull-requests-limit: 10
