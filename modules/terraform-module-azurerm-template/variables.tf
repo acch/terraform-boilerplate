@@ -1,13 +1,12 @@
-variable "location" {
+variable "address_space" {
   type        = string
-  description = "Azure location name"
-  default     = "westeurope"
-}
+  description = "Virtual network address space"
+  default     = "10.0.0.0/16"
 
-variable "tags" {
-  type        = map(string)
-  description = "Tags to add to resources"
-  default     = {}
+  validation {
+    condition     = can(cidrnetmask(var.address_space))
+    error_message = "Address space must be valid IPv4 CIDR block"
+  }
 }
 
 variable "environment" {
@@ -20,13 +19,14 @@ variable "environment" {
   }
 }
 
-variable "address_space" {
+variable "location" {
   type        = string
-  description = "Virtual network address space"
-  default     = "10.0.0.0/16"
+  description = "Azure location name"
+  default     = "westeurope"
+}
 
-  validation {
-    condition     = can(cidrnetmask(var.address_space))
-    error_message = "Address space must be valid IPv4 CIDR block"
-  }
+variable "tags" {
+  type        = map(string)
+  description = "Tags to add to resources"
+  default     = {}
 }

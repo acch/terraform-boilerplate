@@ -39,13 +39,16 @@ No modules.
 | Name | Type |
 |------|------|
 | [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
+| [azurerm_virtual_network.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_location"></a> [location](#input\_location) | Azure location name. | `string` | `"westeurope"` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | Tags to add to resources. | `map(string)` | `{}` | no |
+| <a name="input_address_space"></a> [address\_space](#input\_address\_space) | Virtual network address space | `string` | `"10.0.0.0/16"` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | Environment / stage to provision ('dev' or 'prod') | `string` | n/a | yes |
+| <a name="input_location"></a> [location](#input\_location) | Azure location name | `string` | `"westeurope"` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Tags to add to resources | `map(string)` | `{}` | no |
 
 ## Outputs
 

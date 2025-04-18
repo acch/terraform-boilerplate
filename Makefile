@@ -218,5 +218,9 @@ endif
 	$(TFSORT) outputs.tf
 	$(TFSORT) variables.tf
 
+	for dir in modules/* ; do \
+		$(TFSORT) $${dir}/variables.tf ; \
+	done
+
 clean: ## Clean temporary files
 	find "$(CURDIR)" \( -type f -name ".terraform.lock.hcl" -o -type d -name ".terraform" -o -type f -name "*.tfplan" \) -exec rm -rf {} +

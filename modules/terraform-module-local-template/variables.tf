@@ -1,3 +1,18 @@
+variable "environment" {
+  type        = string
+  description = "Environment / stage to provision ('dev' or 'prod')"
+
+  validation {
+    condition     = contains(["dev", "prod"], var.environment)
+    error_message = "Environment must be either 'dev' or 'prod'"
+  }
+}
+
+variable "filename" {
+  type        = string
+  description = "Name of the output file"
+}
+
 variable "lines" {
   type        = number
   description = "The number of lines to write to the output file"
@@ -17,20 +32,5 @@ variable "words" {
   validation {
     condition     = var.words > 0
     error_message = "Number of words must be greater than 0"
-  }
-}
-
-variable "filename" {
-  type        = string
-  description = "Name of the output file"
-}
-
-variable "environment" {
-  type        = string
-  description = "Environment / stage to provision ('dev' or 'prod')"
-
-  validation {
-    condition     = contains(["dev", "prod"], var.environment)
-    error_message = "Environment must be either 'dev' or 'prod'"
   }
 }

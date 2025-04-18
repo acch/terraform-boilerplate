@@ -46,9 +46,10 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_filename"></a> [filename](#input\_filename) | Name of the output file. | `string` | n/a | yes |
-| <a name="input_lines"></a> [lines](#input\_lines) | The number of lines to write to the output file. Defaults to 5. | `number` | `5` | no |
-| <a name="input_words"></a> [words](#input\_words) | The number of words (in each line) to write to the output file. Defaults to 2. | `number` | `2` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | Environment / stage to provision ('dev' or 'prod') | `string` | n/a | yes |
+| <a name="input_filename"></a> [filename](#input\_filename) | Name of the output file | `string` | n/a | yes |
+| <a name="input_lines"></a> [lines](#input\_lines) | The number of lines to write to the output file | `number` | `5` | no |
+| <a name="input_words"></a> [words](#input\_words) | The number of words (in each line) to write to the output file | `number` | `2` | no |
 
 ## Outputs
 

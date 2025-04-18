@@ -28,15 +28,18 @@ Specifically, you'll want to customize the following files:
   - Enable features in `Makefile`:
 
     ```make
-    ENABLE_AWS		:= FALSE
-    ENABLE_AZURE	:= FALSE
-    ENABLE_GCP		:= FALSE
+    ENABLE_AWS   := FALSE
+    ENABLE_AZURE := TRUE
+    ENABLE_GCP   := FALSE
     ```
 
-  - Define appropriate variables (subscriptions, etc.) in `Makefile`:
+  - Define appropriate environment variables (subscriptions, etc.):
 
-    ```make
-    AZ_SUBSCRIPTION := my-azure-subscription
+    ```shell
+    export ARM_CLIENT_ID=...
+    export ARM_CLIENT_SECRET=...
+    export ARM_SUBSCRIPTION_ID=...
+    export ARM_TENANT_ID=...
     ```
 
 - Optionally, enable [Remote State](https://developer.hashicorp.com/terraform/language/state/remote) via HCP Terraform:
