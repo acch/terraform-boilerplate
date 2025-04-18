@@ -16,9 +16,12 @@ RUN dnf -y update && \
   dnf -y install \
     git \
     golang \
-    yamllint \
-    terraform && \
+    python3-pip \
+    terraform \
+    yamllint && \
   dnf clean all && \
+  pip3 install --no-cache-dir \
+    pre-commit && \
   sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin && \
   GOPATH=/usr/local go install github.com/terraform-docs/terraform-docs@v0.17.0 && \
   GOPATH=/usr/local go install github.com/AlexNabokikh/tfsort@latest && \
