@@ -7,7 +7,7 @@ resource "random_pet" "content" {
 
 # https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file
 resource "local_file" "foo" {
-  filename        = "${path.root}/_${var.filename}.txt"
+  filename        = "${path.root}/_${var.filename}_${var.environment}.txt"
   content         = join("\n", random_pet.content[*].id)
   file_permission = "0644"
 }

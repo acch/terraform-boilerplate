@@ -11,6 +11,6 @@ locals {
     local.config.tags, {
       Environment = local.config.environment
       Stage       = local.config.stage
-      Source      = "Terraform"
+      ManagedBy   = "Terraform"
   })
 }
