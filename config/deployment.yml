@@ -2,6 +2,9 @@
 # name of the output file
 filename: foo
 
+# azure location name
+location: germanywestcentral
+
 # common tags to add to resources
 tags:
-  Namespace: acch
+  Owner: acch

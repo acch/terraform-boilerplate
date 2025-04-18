@@ -2,7 +2,7 @@
 # USAGE
 #
 # make                  # print all targets
-# make login            # run 'terraform login', 'az login' and 'az account set'
+# make login            # run 'terraform login'
 # make init             # run 'terraform init'
 # ENV=dev make plan     # run 'terraform plan' in 'dev' environment (stage)
 # ENV=dev make apply    # run 'terraform apply' in 'dev' environment (stage)
@@ -13,22 +13,17 @@
 # FEATURES
 ###
 ENABLE_AWS		:= FALSE
-ENABLE_AZURE	:= FALSE
+ENABLE_AZURE	:= TRUE
 ENABLE_GCP		:= FALSE
 
 ###
 # VARIABLES
 ###
-AZ				:= $(shell command -v az 2> /dev/null)
-TERRAFORM		:= $(shell command -v terraform 2> /dev/null)
+TERRAFORM				:= $(shell command -v terraform 2> /dev/null)
 TERRAFORM-DOCS	:= $(shell command -v terraform-docs 2> /dev/null)
-TFSORT			:= $(shell command -v tfsort 2> /dev/null)
-YAMLLINT		:= $(shell command -v yamllint 2> /dev/null)
-.DEFAULT_GOAL	:= help
-
-###
-# Azure
-AZ_SUBSCRIPTION := my-azure-subscription
+TFSORT					:= $(shell command -v tfsort 2> /dev/null)
+YAMLLINT				:= $(shell command -v yamllint 2> /dev/null)
+.DEFAULT_GOAL		:= help
 
 ###
 # AWS
@@ -41,6 +36,11 @@ AZ_SUBSCRIPTION := my-azure-subscription
 # ...
 
 ###
+# ENVIRONMENT VARIABLES
+###
+export TF_IN_AUTOMATION = true
+
+###
 # TARGETS
 ###
 .PHONY: check check-env help login fmt lint list show init validate test refresh plan apply destroy docs sort clean
@@ -49,13 +49,6 @@ check:
 # check for necessary tools
 ifeq (, $(TERRAFORM))
 	$(error No terraform in $(PATH))
-endif
-
-# Azure
-ifeq ($(ENABLE_AZURE),TRUE)
-ifeq (, $(AZ))
-	$(error No az in $(PATH))
-endif
 endif
 
 # AWS
@@ -72,6 +65,22 @@ ifndef ENV
 	$(error ENV is not defined. Define environment (stage) as 'ENV=dev' or 'ENV=prod')
 endif
 
+# Azure
+ifeq ($(ENABLE_AZURE),TRUE)
+ifndef ARM_CLIENT_ID
+	$(error ARM_CLIENT_ID is not defined.)
+endif
+ifndef ARM_CLIENT_SECRET
+	$(error ARM_CLIENT_SECRET is not defined.)
+endif
+ifndef ARM_SUBSCRIPTION_ID
+	$(error ARM_SUBSCRIPTION_ID is not defined.)
+endif
+ifndef ARM_TENANT_ID
+	$(error ARM_TENANT_ID is not defined.)
+endif
+endif
+
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 help: ## Print targets and their descriptions
 	@echo
@@ -85,20 +94,6 @@ help: ## Print targets and their descriptions
 login: check ## Log in and set active subscription
 	@$(TERRAFORM) -version
 	$(TERRAFORM) login
-
-# Azure
-ifeq ($(ENABLE_AZURE),TRUE)
-	@$(AZ) version \
-		--output table
-
-	$(AZ) account clear
-	$(AZ) login \
-		--output none
-	$(AZ) account set \
-		--name $(AZ_SUBSCRIPTION)
-	@$(AZ) account show \
-		--output table
-endif
 
 # AWS
 # https://github.com/acch/terraform-boilerplate/issues/2
@@ -201,7 +196,8 @@ endif
 
 	$(TERRAFORM) destroy \
 		-var "env=$(ENV)" \
-		-input=false
+		-input=false \
+		-auto-approve
 
 docs: ## Generate documentation
 ifeq (, $(TERRAFORM-DOCS))

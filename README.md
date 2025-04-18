@@ -123,6 +123,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_azurerm_template"></a> [azurerm\_template](#module\_azurerm\_template) | ./modules/terraform-module-azurerm-template | n/a |
 | <a name="module_local_template"></a> [local\_template](#module\_local\_template) | ./modules/terraform-module-local-template | n/a |
 
 ## Resources
