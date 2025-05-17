@@ -16,3 +16,14 @@ resource "azurerm_virtual_network" "this" {
 
   tags = var.tags
 }
+
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet
+resource "azurerm_subnet" "this" {
+  for_each = { for i, s in var.subnets : s => i }
+
+  name                 = "snet-${each.key}-${var.environment}"
+  resource_group_name  = azurerm_resource_group.this.name
+  virtual_network_name = azurerm_virtual_network.this.name
+
+  address_prefixes = [cidrsubnet(var.address_space, 2, each.value)]
+}

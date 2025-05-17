@@ -1,6 +1,6 @@
 # modules/terraform-module-local-template
 module "local_template" {
-  count  = 1 # disabled
+  count  = 0 # disabled
   source = "./modules/terraform-module-local-template"
 
   filename = local.config.filename

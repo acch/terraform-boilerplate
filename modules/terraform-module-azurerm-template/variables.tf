@@ -25,6 +25,17 @@ variable "location" {
   default     = "westeurope"
 }
 
+variable "subnets" {
+  type        = list(string)
+  description = "Virtual network subnets"
+  default     = ["frontend", "backend"]
+
+  validation {
+    condition     = length(var.subnets) <= 4
+    error_message = "Number of subnets must not be greater than 4"
+  }
+}
+
 variable "tags" {
   type        = map(string)
   description = "Tags to add to resources"
