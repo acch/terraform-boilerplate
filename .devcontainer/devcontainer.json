@@ -15,6 +15,7 @@
     }
   },
 
+  "containerUser": "vscode",
   "securityOpt": ["label=disable"],
   "mounts": [],
 
@@ -22,9 +23,9 @@
   "workspaceFolder": "/src",
 
   "remoteEnv": {
-    "ARM_SUBSCRIPTION_ID": "${localEnv:ARM_SUBSCRIPTION_ID}",
     "ARM_CLIENT_ID": "${localEnv:ARM_CLIENT_ID}",
     "ARM_CLIENT_SECRET": "${localEnv:ARM_CLIENT_SECRET}",
+    "ARM_SUBSCRIPTION_ID": "${localEnv:ARM_SUBSCRIPTION_ID}",
     "ARM_TENANT_ID": "${localEnv:ARM_TENANT_ID}"
   }
 }

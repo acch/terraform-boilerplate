@@ -1,12 +1,13 @@
 FROM registry.access.redhat.com/ubi9/ubi:latest
 
+RUN useradd -ms /bin/bash vscode
+
 ARG PS1A="'\n\[\e[0;1;94m\]\W \[\e[0;1;93m\]@\[\e[0;1;93m\]$(git branch --show-current 2>/dev/null)\n\[\e[0;32m\]➜ \[\e[0m\]'"
-RUN cat <<EOF >> /root/.bashrc
+RUN cat <<EOF >> ~vscode/.bashrc
 alias ls='ls --color=auto'
 alias ll='ls -l --color=auto'
 alias la='ls -la --color=auto'
 PS1=$PS1A
-export PATH=$PATH:/usr/local/go/bin
 EOF
 
 RUN dnf -y update && \
@@ -16,15 +17,13 @@ RUN dnf -y update && \
   dnf -y install \
     git \
     golang \
+    pre-commit \
     python3-pip \
     terraform \
     yamllint && \
   dnf clean all && \
-  pip3 install --no-cache-dir \
-    pre-commit && \
   sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin && \
-  GOPATH=/usr/local go install github.com/terraform-docs/terraform-docs@v0.17.0 && \
-  GOPATH=/usr/local go install github.com/AlexNabokikh/tfsort@latest && \
+  GOPATH=/usr/local go install github.com/terraform-docs/terraform-docs@v0.17 && \
+  GOPATH=/usr/local go install github.com/AlexNabokikh/tfsort@v0.3 && \
+  GOPATH=/usr/local go install github.com/terraform-linters/tflint@v0.52 && \
   GOPATH=/usr/local go clean -modcache
-
-VOLUME ["/src"]
