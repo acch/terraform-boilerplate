@@ -219,6 +219,7 @@ endif
 	$(TFSORT) variables.tf
 
 	for dir in modules/* ; do \
+		$(TFSORT) $${dir}/outputs.tf ; \
 		$(TFSORT) $${dir}/variables.tf ; \
 	done
 
